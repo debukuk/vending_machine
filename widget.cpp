@@ -15,25 +15,47 @@ Widget::~Widget()
 }
 
 void Widget::changeMoney(int money){
-    if (this->money+money >= 0) {
-        this->money += money;
-        ui->lcdNumber->display(this->money);
+    this->money += money;
+    ui->lcdNumber->display(this->money);
+    if (this->money >= 100) {
+        ui->pbCoffee->setEnabled(true);
+        ui->pbCoffee->repaint();
+    }
+    if (this->money >= 150) {
+        ui->pbTea->setEnabled(true);
+        ui->pbTea->repaint();
+    }
+    if (this->money >= 200) {
+        ui->pbCoke->setEnabled(true);
+        ui->pbCoke->repaint();
     }
 }
 
 void Widget::on_pbCoffee_clicked()
 {
-    changeMoney(-100);
+    if (this->money-100 < 0) {
+        ui->pbCoffee->setEnabled(false);
+        ui->pbCoffee->repaint();
+    }else
+        changeMoney(-100);
 }
 
 void Widget::on_pbTea_clicked()
 {
-    changeMoney(-150);
+    if (this->money-150 < 0) {
+        ui->pbTea->setEnabled(false);
+        ui->pbTea->repaint();
+    }else
+        changeMoney(-150);
 }
 
 void Widget::on_pbCoke_clicked()
 {
-    changeMoney(-200);
+    if (this->money-200 < 0) {
+        ui->pbCoke->setEnabled(false);
+        ui->pbCoke->repaint();
+    }else
+        changeMoney(-200);
 }
 
 void Widget::on_pb10_clicked()
